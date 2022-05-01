@@ -1,6 +1,7 @@
 package banking;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 public class Operation {
 	private int numOperation = 0;
@@ -18,14 +19,22 @@ public class Operation {
 	public Operation(Account account, String operationType, Double balance) throws Exception {
 		
 		if(operationType != operationTypes[0] || operationType != operationTypes[1]) {
-			throw new Exception("\"" + operationType + "\" is an incompatible value for parameter operationType");
+			throw new Exception("\"" + operationType + "\" is an incompatible value for parameter (operationType)");
 		}
 		else {
-			this.operationDateTime = LocalDateTime.now();
+			this.numOperation++;
+			this.operationType = operationType;
+			this.operationDateTime = LocalDateTime.now();//current DateTime
 			this.balance = balance;
 			
 			if(!account.getHistory().isEmpty()) {
-				
+				account.setHistory(new HashMap<Integer, Operation>());
+			}			
+			else {
+				HashMap<Integer, Operation> currentOperation = new HashMap<Integer, Operation>();
+				currentOperation = account.getHistory();
+				currentOperation.put(this.numOperation, this);
+				account.setHistory(currentOperation);
 			}
 		}
 	}
