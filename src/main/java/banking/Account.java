@@ -3,14 +3,18 @@ package banking;
 import java.util.HashMap;
 
 public class Account {
-	private int numAccount;
+	private static int counterAccount;
 	
+	private int numAccount;
 	//private Client client;
 	
 	private Double balance;
 
 	private HashMap<Integer, Operation> history;
 	
+	public Account() {
+		this.numAccount = ++counterAccount;
+	}
 	public void makeDeposit(int amount) {
 		this.balance += amount;
 	}
@@ -20,8 +24,7 @@ public class Account {
 	}
 	
 	public HashMap<Integer, Operation> getHistory() {
-		return this.history;
-		
+		return this.history;	
 	}
 
 	public void setHistory(HashMap<Integer, Operation> history) {
