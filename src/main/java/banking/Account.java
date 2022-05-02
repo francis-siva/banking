@@ -12,7 +12,7 @@ public class Account {
 	private HashMap<Integer, Operation> history;
 	
 	public void makeDeposit(int amount) {
-		
+		this.balance += amount;
 	}
 	
 	public void makeWithdraw(int amount) {
