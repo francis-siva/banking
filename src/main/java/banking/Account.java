@@ -20,7 +20,7 @@ public class Account {
 		else {
 			this.balance = (double) amount;
 			this.history = new HashMap<Integer, Operation>();
-			this.history.put(1, new Operation(this, "deposit", this.balance));
+			this.history.put(1, new Operation(this, "deposit", this.balance.intValue()));
 			this.numAccount = ++counterAccount;
 		}
 	}

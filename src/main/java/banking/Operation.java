@@ -14,27 +14,28 @@ public class Operation {
 	
 	private LocalDateTime operationDateTime;
 	
-	private Double balance;
+	private int amount;
 
-	public Operation(Account account, String operationType, Double balance) throws Exception {
+	public Operation(Account account, String operationType, int amount) throws Exception {
 		
-		if(operationType != operationTypes[0] || operationType != operationTypes[1]) {
+		if(!operationType.equals(operationTypes[0]) && !operationType.equals(operationTypes[1])) {
 			throw new Exception("\"" + operationType + "\" is an incompatible value for parameter (operationType)");
 		}
 		else {
-			this.numOperation++;
+			++this.numOperation;
+			this.account = account;
 			this.operationType = operationType;
 			this.operationDateTime = LocalDateTime.now();//current DateTime
-			this.balance = balance;
+			this.amount = amount;
 			
-			if(!account.getHistory().isEmpty()) {
-				account.setHistory(new HashMap<Integer, Operation>());
+			if(!this.account.getHistory().isEmpty()) {
+				this.account.setHistory(new HashMap<Integer, Operation>());
 			}			
 			else {
 				HashMap<Integer, Operation> currentOperation = new HashMap<Integer, Operation>();
-				currentOperation = account.getHistory();
+				currentOperation = this.account.getHistory();
 				currentOperation.put(this.numOperation, this);
-				account.setHistory(currentOperation);
+				this.account.setHistory(currentOperation);
 			}
 		}
 	}
@@ -71,17 +72,21 @@ public class Operation {
 		this.operationDateTime = operationDateTime;
 	}
 
-	public Double getBalance() {
-		return balance;
+	public int getAmount() {
+		return amount;
 	}
 
-	public void setBalance(Double balance) {
-		this.balance = balance;
+	public void setAmount(int amount) {
+		this.amount = amount;
 	}
 
 	@Override
 	public String toString() {
-		return "Operation [numOperation=" + numOperation + ", account=" + account + ", operationType=" + operationType
-				+ ", operationDateTime=" + operationDateTime + ", balance=" + balance + "]";
+		return "Operation [numOperation=" + numOperation + ",  "
+				+ "account=" + account.getNumAccount() + ","
+				+ "operationType=" + operationType + ", "
+				+ "operationDateTime=" + operationDateTime + ", "
+				+ "amount=" + amount + ", "
+				+ "balance=" + account.getBalance() + "]";
 	}
 }
