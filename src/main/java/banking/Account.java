@@ -18,14 +18,17 @@ public class Account {
 			throw new Exception("Not enough amount for opening account");
 		}
 		else {
-			this.balance = (double) amount;
-			this.history = new HashMap<Integer, Operation>();
-			this.history.put(1, new Operation(this, "deposit", this.balance.intValue()));
 			this.numAccount = ++counterAccount;
+			this.balance = (double) amount;
+			
+			this.history = new HashMap<Integer, Operation>();
+			this.history.put(this.history.size() +1, new Operation(this, "deposit", amount));			
 		}
 	}
-	public void makeDeposit(int amount) {
+	public void makeDeposit(int amount) throws Exception {
 		this.balance += amount;
+
+		this.history.put(this.history.size() +1, new Operation(this, "deposit", amount));
 	}
 	
 	public void makeWithdraw(int amount) {
