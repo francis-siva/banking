@@ -4,7 +4,9 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class Operation {
-	private int numOperation = 0;
+	private static int counterOperation = 0;
+	
+	private int numOperation;
 	
 	private Account account;
 	
@@ -22,21 +24,33 @@ public class Operation {
 			throw new Exception("\"" + operationType + "\" is an incompatible value for parameter (operationType)");
 		}
 		else {
-			++this.numOperation;
 			this.account = account;
 			this.operationType = operationType;
 			this.operationDateTime = LocalDateTime.now();//current DateTime
 			this.amount = amount;
 			
-			if(!this.account.getHistory().isEmpty()) {
-				this.account.setHistory(new HashMap<Integer, Operation>());
-			}			
-			else {
-				HashMap<Integer, Operation> currentOperation = new HashMap<Integer, Operation>();
-				currentOperation = this.account.getHistory();
-				currentOperation.put(this.numOperation, this);
-				this.account.setHistory(currentOperation);
+			
+			//AccountHistory Without Operations.
+			if(this.account.getHistory().size() == 0) {
+				this.numOperation = Operation.counterOperation = 1;
+				
+				HashMap<Integer, Operation> initOperation = new HashMap<Integer, Operation>();
+				initOperation.put(this.numOperation, this);
+				this.account.setHistory(initOperation);
+				
+
 			}
+			//AccountHistory With Operations.
+			else {
+				this.numOperation = ++Operation.counterOperation;
+			
+				HashMap<Integer, Operation> accountOperations;
+				accountOperations = this.account.getHistory();
+				accountOperations.put(this.numOperation, this);
+				this.account.setHistory(accountOperations);
+			}
+			
+			System.out.println("Operation n°" + this.numOperation + " " + operationType + "of " + amount + " in account " + this.account.getNumAccount());
 		}
 	}
 	
