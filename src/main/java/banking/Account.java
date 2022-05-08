@@ -32,12 +32,25 @@ public class Account {
 			this.history.put(this.history.size() +1, new Operation(this, "deposit", amount));
 		}
 		else {
-			throw new Exception("Amount must be a positive integer");
+			throw new Exception("Deposit amount must be a positive integer");
 		}
 	}
 	
-	public void makeWithdraw(int amount) {
-		
+	public void makeWithdraw(int amount) throws Exception {
+		if(amount > 0) {
+			
+			if(amount <= this.balance) {
+				this.balance -= amount;
+				
+				this.history.put(this.history.size() +1, new Operation(this, "withdraw", amount));
+			}
+			else {
+				throw new Exception("Withdraw amount exceeded account total balance");
+			}
+		}
+		else {
+			throw new Exception("Withdraw amount must be a positive integer");
+		}
 	}
 	
 	public HashMap<Integer, Operation> getHistory() {
