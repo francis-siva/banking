@@ -17,6 +17,8 @@ public class Operation {
 	private LocalDateTime operationDateTime;
 	
 	private int amount;
+	
+	private Double balanceFromOperation;
 
 	public Operation(Account account, String operationType, int amount) throws Exception {
 		
@@ -28,7 +30,7 @@ public class Operation {
 			this.operationType = operationType;
 			this.operationDateTime = LocalDateTime.now();//current DateTime
 			this.amount = amount;
-			
+			this.balanceFromOperation = this.account.getBalance();
 			
 			//AccountHistory Without Operations.
 			if(this.account.getHistory().size() == 0) {
@@ -37,9 +39,8 @@ public class Operation {
 				HashMap<Integer, Operation> initOperation = new HashMap<Integer, Operation>();
 				initOperation.put(this.numOperation, this);
 				this.account.setHistory(initOperation);
-				
-
 			}
+			
 			//AccountHistory With Operations.
 			else {
 				this.numOperation = ++Operation.counterOperation;
@@ -94,6 +95,14 @@ public class Operation {
 		this.amount = amount;
 	}
 
+	public Double getBalanceFromOperation() {
+		return balanceFromOperation;
+	}
+
+	public void setBalanceFromOperation(Double balanceFromOperation) {
+		this.balanceFromOperation = balanceFromOperation;
+	}
+
 	@Override
 	public String toString() {
 		return "Operation [numOperation=" + numOperation + ",  "
@@ -101,6 +110,6 @@ public class Operation {
 				+ "operationType=" + operationType + ", "
 				+ "operationDateTime=" + operationDateTime + ", "
 				+ "amount=" + amount + ", "
-				+ "balance=" + account.getBalance() + "]";
+				+ "balance=" + balanceFromOperation + "]";
 	}
 }
