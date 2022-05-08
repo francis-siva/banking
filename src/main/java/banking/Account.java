@@ -26,9 +26,14 @@ public class Account {
 		}
 	}
 	public void makeDeposit(int amount) throws Exception {
-		this.balance += amount;
-
-		this.history.put(this.history.size() +1, new Operation(this, "deposit", amount));
+		if(amount > 0) {
+			this.balance += amount;
+	
+			this.history.put(this.history.size() +1, new Operation(this, "deposit", amount));
+		}
+		else {
+			throw new Exception("Amount must be a positive integer");
+		}
 	}
 	
 	public void makeWithdraw(int amount) {
