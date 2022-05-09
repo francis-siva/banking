@@ -7,11 +7,16 @@ public class Bank {
 	
 	private Bank() {};
 	
-	/* Unique instance in Singleton's way */
-	private static Bank Instance = new Bank();
+	private static Bank Instance;
 	
 	/* Access to Singleton instance */
 	public static Bank getInstance() {
+		
+		/* Unique instance in Singleton's way */
+		if(Bank.Instance == null) {
+			Bank.Instance = new Bank();
+		}
+		
 		return Instance;
 	}
 
