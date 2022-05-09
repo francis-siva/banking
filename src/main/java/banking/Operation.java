@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class Operation {
-	private static int counterOperation = 0;
 	
 	private int numOperation;
 	
@@ -34,7 +33,7 @@ public class Operation {
 			
 			//AccountHistory Without Operations.
 			if(this.account.getHistory().size() == 0) {
-				this.numOperation = Operation.counterOperation = 1;
+				this.numOperation = 1;
 				
 				HashMap<Integer, Operation> initOperation = new HashMap<Integer, Operation>();
 				initOperation.put(this.numOperation, this);
@@ -43,7 +42,8 @@ public class Operation {
 			
 			//AccountHistory With Operations.
 			else {
-				this.numOperation = ++Operation.counterOperation;
+				/* numOperation increments according to the last Operation present in Account's history */
+				this.numOperation = this.account.getHistory().get(this.account.getHistory().size()).getNumOperation() + 1;
 			
 				HashMap<Integer, Operation> accountOperations;
 				accountOperations = this.account.getHistory();
@@ -51,7 +51,7 @@ public class Operation {
 				this.account.setHistory(accountOperations);
 			}
 			
-			System.out.println("Operation n°" + this.numOperation + " " + operationType + "of " + amount + " in account " + this.account.getNumAccount());
+			System.out.println("Operation n°" + this.numOperation + " " + operationType + " of " + amount + " in account " + this.account.getNumAccount());
 		}
 	}
 	
